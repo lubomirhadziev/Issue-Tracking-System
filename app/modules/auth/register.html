@@ -38,7 +38,7 @@
                             </div>
 
                             <button
-                                    ng-disabled="signUpForm.$invalid || (userData.Password != userData.ConfirmPassword && userData.Password.length > 0)"
+                                    ng-disabled="signUpForm.$invalid || isSubmitBtnDisabled || (userData.Password != userData.ConfirmPassword && userData.Password.length > 0)"
                                     type="submit"
                                     class="btn btn-lg btn-success btn-block">Sign in
                             </button>

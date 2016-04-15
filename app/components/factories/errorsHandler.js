@@ -12,8 +12,10 @@ app
                         });
                     });
 
+                } else if (typeof errors.error_description !== "undefined") {
+                    SweetAlert.error(errors.error_description);
                 } else {
-                    SweetAlert.error('Сървърна грешка! Моля, опитайте по-късно.');
+                    SweetAlert.error('Server error! Please try again.');
                 }
             }
 

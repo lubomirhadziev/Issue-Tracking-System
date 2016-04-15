@@ -1,4 +1,4 @@
-var app = angular.module('portfolio', [
+var app = angular.module('issueTrackingSystem', [
         'ngRoute',
         'ui.router',
         'oitozero.ngSweetAlert',
@@ -17,7 +17,11 @@ var app = angular.module('portfolio', [
             .state('root', {
                 abstract: true,
                 template: '<ui-view/>',
-                controller: "RootCtrl"
+                controller: "RootCtrl",
+                data: {
+                    requireUserLoggedIn: false,
+                    requireUserNotLoggedIn: true
+                }
             })
 
             .state('root.login', {
@@ -39,7 +43,11 @@ var app = angular.module('portfolio', [
             .state('authenticated', {
                 abstract: true,
                 template: '<ui-view/>',
-                controller: "AuthenticatedCtrl"
+                controller: "AuthenticatedCtrl",
+                data: {
+                    requireUserLoggedIn: true,
+                    requireUserNotLoggedIn: false
+                }
             })
 
             .state('authenticated.dashboard', {
@@ -51,5 +59,28 @@ var app = angular.module('portfolio', [
         ;
     }])
 
-    .run(['$rootScope', function ($rootScope) {
+    .run(['$rootScope', '$state', 'authentication', function ($rootScope, $state, authentication) {
+
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            var stateData = toState.data;
+
+            // redirect user to login page if user does not exists
+            if (stateData.requireUserLoggedIn) {
+                if (!authentication.getToken()) {
+                    event.preventDefault();
+                    $state.go('root.login');
+                    return false;
+                }
+            }
+
+            // redirect user to dashboard page if user exists
+            if (stateData.requireUserNotLoggedIn) {
+                if (authentication.getToken()) {
+                    event.preventDefault();
+                    $state.go('authenticated.dashboard');
+                    return false;
+                }
+            }
+        });
+
     }]);
