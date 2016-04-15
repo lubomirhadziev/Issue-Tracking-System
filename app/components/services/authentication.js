@@ -1,10 +1,25 @@
 app.service('authentication', ['$q', 'httpRequests', function ($q, httpRequests) {
+
     var authentication = {
 
-        'fetchAuthToken': function (email, password) {
+        'USER_TOKEN_NAME': 'user_token',
+
+        '_saveToken': function (token) {
+            window.sessionStorage.setItem(this.USER_TOKEN_NAME, token);
+        },
+
+        'getToken': function () {
+            return window.sessionStorage.getItem(this.USER_TOKEN_NAME);
+        },
+
+        'removeToken': function () {
+            window.sessionStorage.removeItem(this.USER_TOKEN_NAME);
+        },
+
+        "_fetchAuthToken": function (email, password) {
             var deferred = $q.defer();
 
-            httpRequests.post('auth_token', {}, {
+            httpRequests.post('auth_token', {
                     Username: email,
                     Password: password,
                     grant_type: "password"
@@ -18,22 +33,30 @@ app.service('authentication', ['$q', 'httpRequests', function ($q, httpRequests)
             return deferred.promise;
         },
 
-        '_saveToken': function (token) {
-            window.sessionStorage.setItem('user_token', token);
-        },
-
-        'getToken': function () {
-            return window.sessionStorage.getItem('user_token');
+        '_saveCurrentUserData': function (userData) {
+            window.sessionStorage.setItem('user_data', JSON.stringify(userData));
         },
 
         'signInUser': function (email, password) {
             var deferred = $q.defer();
             var _this = this;
 
-            _this.fetchAuthToken(email, password)
+            _this._fetchAuthToken(email, password)
                 .then(function (response) {
+                    // save user access token
                     _this._saveToken(response.access_token);
-                    deferred.resolve(response);
+
+                    // save current logged user data in session storage
+                    httpRequests.get('current_user_data')
+                        .then(function (currentUserResponse) {
+                            _this._saveCurrentUserData(currentUserResponse);
+
+                            // return resolve
+                            deferred.resolve(currentUserResponse);
+                        }, function (err) {
+                            deferred.reject(err);
+                        });
+
                 }, function (err) {
                     deferred.reject(err);
                 });

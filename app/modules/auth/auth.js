@@ -31,9 +31,11 @@ app
         $scope.doRegister = function () {
             $scope.isSubmitBtnDisabled = true;
 
-            httpRequests.post('auth_register', {}, $scope.userData)
+            // make request to sign up user
+            httpRequests.post('auth_register', $scope.userData)
                 .then(function (response) {
 
+                    // auto sign in user
                     authentication.signInUser($scope.userData.Email, $scope.userData.Password)
                         .then(function (response) {
                             $state.go('authenticated.dashboard');
@@ -48,4 +50,13 @@ app
                 });
 
         };
-    }]);
+    }])
+
+    .controller('AuthLogoutCtrl', ['$state', 'authentication', 'SweetAlert', 'user', function ($state, authentication, SweetAlert, user) {
+        authentication.removeToken();
+        user.clearLoggedUserData();
+
+        SweetAlert.success('You have been successfully logged out!');
+        $state.go('root.login');
+    }])
+;

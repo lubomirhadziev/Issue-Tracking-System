@@ -1,8 +1,8 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "name": "Issue Tracking System",
+  "description": "SoftUni JS Frameworks AngularJS Exam Project",
+  "version": "0.0.1",
+  "homepage": "https://github.com/lubomirhadziev/Issue-Tracking-System",
   "license": "MIT",
   "private": true,
   "dependencies": {

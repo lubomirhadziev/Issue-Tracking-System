@@ -16,10 +16,7 @@
     <meta http-equiv="Content-Security-Policy"
           content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
 
-    <meta name="googlebot" content="index,follow,noodp"/>
-    <meta name="robots" content="all,index,follow"/>
-    <meta name="msnbot" content="all,index,follow"/>
-    <meta name="revisit-after" content="2 days">
+    <title>Issue Tracking System</title>
 
     <link href="/app/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/app/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
@@ -41,7 +38,7 @@
 
 </head>
 
-<body ng-class="{'with-side-menu': authenticatedState}" ng-cloak>
+<body ng-cloak>
 
 <div id="wrapper">
 
@@ -80,9 +77,10 @@
 
 <script src="/app/components/factories/api.js"></script>
 <script src="/app/components/factories/errorsHandler.js"></script>
+<script src="/app/components/factories/user.js"></script>
+<script src="/app/components/factories/http-requests.js"></script>
 
 <script src="/app/components/services/authentication.js"></script>
-<script src="/app/components/services/http-requests.js"></script>
 
 <script src="/app/components/directives/sideMenu.js"></script>
 

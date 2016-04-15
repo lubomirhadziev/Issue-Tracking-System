@@ -5,7 +5,7 @@ var app = angular.module('issueTrackingSystem', [
         'angular-loading-bar'
     ])
 
-    .constant('API_URL', 'http://softuni-issue-tracker.azurewebsites.net/api/')
+    .constant('API_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
 
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -50,6 +50,11 @@ var app = angular.module('issueTrackingSystem', [
                 }
             })
 
+            .state('authenticated.logout', {
+                url: "/logout",
+                controller: 'AuthLogoutCtrl'
+            })
+
             .state('authenticated.dashboard', {
                 url: "/dashboard",
                 controller: 'DashboardCtrl',
@@ -59,14 +64,14 @@ var app = angular.module('issueTrackingSystem', [
         ;
     }])
 
-    .run(['$rootScope', '$state', 'authentication', function ($rootScope, $state, authentication) {
+    .run(['$rootScope', '$state', 'user', function ($rootScope, $state, user) {
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             var stateData = toState.data;
 
             // redirect user to login page if user does not exists
             if (stateData.requireUserLoggedIn) {
-                if (!authentication.getToken()) {
+                if (!user.isUserLoggedIn()) {
                     event.preventDefault();
                     $state.go('root.login');
                     return false;
@@ -75,7 +80,7 @@ var app = angular.module('issueTrackingSystem', [
 
             // redirect user to dashboard page if user exists
             if (stateData.requireUserNotLoggedIn) {
-                if (authentication.getToken()) {
+                if (user.isUserLoggedIn()) {
                     event.preventDefault();
                     $state.go('authenticated.dashboard');
                     return false;
