@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Sign In</h3>
+                </div>
+                <div class="panel-body">
+                    <form
+                            ng-submit="doLogin()"
+                            name="signInForm"
+                            role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input
+                                        ng-model="userData.Email"
+                                        required="required"
+                                        autofocus="autofocus"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="E-Mail"/>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                        ng-model="userData.Password"
+                                        required="required"
+                                        type="password"
+                                        class="form-control"
+                                        placeholder="Password"/>
+                            </div>
+
+                            <button
+                                    ng-disabled="signInForm.$invalid"
+                                    type="submit"
+                                    class="btn btn-lg btn-success btn-block">Sign in
+                            </button>
+                        </fieldset>
+                    </form>
+
+                    <p class="text-center auth-note">
+                        <a ui-sref="root.register" title="Sign up">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

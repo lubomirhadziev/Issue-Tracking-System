@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" ng-app="portfolio" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="portfolio" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="portfolio" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="portfolio" class="no-js"> <!--<![endif]-->
+<head>
+    <base href="/app/">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
+
+    <meta name="googlebot" content="index,follow,noodp"/>
+    <meta name="robots" content="all,index,follow"/>
+    <meta name="msnbot" content="all,index,follow"/>
+    <meta name="revisit-after" content="2 days">
+
+    <link href="/app/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/app/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="/app/assets/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/app/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Plugins -->
+    <link rel="stylesheet" href="/app/bower_components/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" href="/app/bower_components/angular-loading-bar/build/loading-bar.min.css">
+
+    <script src="/app/bower_components/angular/angular.min.js"></script>
+
+</head>
+
+<body ng-class="{'with-side-menu': authenticatedState}" ng-cloak>
+
+<div id="wrapper">
+
+    <div
+            ng-if="authenticatedState"
+            ng-include="'modules/template/header.html'"></div>
+
+    <div ui-view></div>
+
+</div>
+
+<!-- TEMPLATE LIBRARIES -->
+<script src="/app/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/app/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/app/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<script src="/app/assets/js/sb-admin-2.js"></script>
+
+<!-- LIBRARIES -->
+<script src="/app/bower_components/underscore/underscore-min.js"></script>
+
+<script src="/app/bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+<script src="/app/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+<script src="/app/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+<script src="/app/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/app/bower_components/ngSweetAlert/SweetAlert.min.js"></script>
+
+<script src="/app/bower_components/angular-route/angular-route.min.js"></script>
+<script src="/app/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+<!--<script src="/app/bower_components/fancybox-plus/src/jquery.fancybox-plus.js"></script>-->
+<!--<script src="/app/bower_components/angular-fancybox-plus/js/angular-fancybox-plus.js"></script>-->
+
+<!-- APP JS -->
+<script src="/app/app.js"></script>
+
+<script src="/app/components/factories/api.js"></script>
+<script src="/app/components/factories/errorsHandler.js"></script>
+
+<script src="/app/components/services/authentication.js"></script>
+<script src="/app/components/services/http-requests.js"></script>
+
+<script src="/app/components/directives/sideMenu.js"></script>
+
+<script src="/app/modules/root/root.js"></script>
+<script src="/app/modules/authenticated/authenticated.js"></script>
+<script src="/app/modules/auth/auth.js"></script>
+<script src="/app/modules/home/home.js"></script>
+<script src="/app/modules/dashboard/dashboard.js"></script>
+
+
+</body>
+</html>
