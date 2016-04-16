@@ -115,13 +115,12 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>#</th>
                             <th>Name</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        <tr ng-if="!affiliatedPorjects">
+                        <tr ng-if="affiliatedPorjects.length === 0">
                             <td class="text-center" colspan="2">
                                 Affiliated projects not found!
                             </td>
@@ -129,13 +128,19 @@
 
                         <tr
                                 ng-if="affiliatedPorjects"
-                                ng-repeat="project in affiliatedPorjects | orderBy: 'Id' : true">
-                            <td>{{ (affiliatedPorjects.length - $index) }}</td>
-                            <td>{{ project.Name }}</td>
+                                dir-paginate="project in affiliatedPorjects | itemsPerPage: 10 | orderBy: 'Id' : true">
+                            <td>
+                                <a ui-sref="authenticated.single_project({id: project.Id})" title="{{ project.Name }}">
+                                    {{ project.Name }}
+                                </a>
+                            </td>
                         </tr>
 
                         </tbody>
                     </table>
+
+
+                    <dir-pagination-controls></dir-pagination-controls>
                 </div>
             </div>
         </div>

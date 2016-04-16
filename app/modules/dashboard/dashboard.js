@@ -1,20 +1,11 @@
-app.controller('DashboardCtrl', ['$scope', 'httpRequests', 'errorsHandler', 'user', function ($scope, httpRequests, errorsHandler, user) {
+app.controller('DashboardCtrl', ['$scope', 'httpRequests', 'errorsHandler', 'user', 'projects', function ($scope, httpRequests, errorsHandler, user, projects) {
 
     // get current user data
     var currentUserData = user.getLoggedUserData();
 
-    // fetch affiliated projects
-    $scope.affiliatedPorjects = [];
-
-    httpRequests.get('projects')
-        .then(function (response) {
-
-            $scope.affiliatedPorjects = _.filter(response, function (project) {
-                return (project.Lead.Id === currentUserData.Id);
-            });
-
-        }, function (err) {
-            errorsHandler.handle(err);
-        });
+    // filter affiliated projects
+    $scope.affiliatedPorjects = _.filter(projects, function (project) {
+        return (project.Lead.Id === currentUserData.Id);
+    });
 
 }]);

@@ -2,12 +2,16 @@ var app = angular.module('issueTrackingSystem', [
         'ngRoute',
         'ui.router',
         'oitozero.ngSweetAlert',
-        'angular-loading-bar'
+        'angular-loading-bar',
+        'angularUtils.directives.dirPagination'
     ])
 
     .constant('API_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
 
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'paginationTemplateProvider', function ($stateProvider, $urlRouterProvider, paginationTemplateProvider) {
+
+        // pagination config
+        paginationTemplateProvider.setPath('components/views/dirPagination.tpl.html');
 
         // routes config
         //$locationProvider.html5Mode(true);
@@ -58,9 +62,53 @@ var app = angular.module('issueTrackingSystem', [
             .state('authenticated.dashboard', {
                 url: "/dashboard",
                 controller: 'DashboardCtrl',
-                templateUrl: "modules/dashboard/dashboard.html"
+                templateUrl: "modules/dashboard/dashboard.html",
+                resolve: {
+                    projects: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('projects');
+                    }]
+                }
             })
 
+            .state('authenticated.single_project', {
+                url: "/projects/:id",
+                controller: 'SingleProjectCtrl',
+                templateUrl: "modules/projects/single_project.html",
+                resolve: {
+                    projectData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_project', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    projectIssues: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_project_issues', {
+                            id: $stateParams.id
+                        });
+                    }]
+                }
+            })
+
+            .state('authenticated.single_project_add_issue', {
+                url: "/projects/:id/add-issue",
+                controller: 'AddIssueCtrl',
+                templateUrl: "modules/issues/add_issue.html",
+                resolve: {
+                    projectData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_project', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    allUsers: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('users');
+                    }],
+
+                    allProjects: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('projects');
+                    }]
+                }
+            })
         ;
     }])
 

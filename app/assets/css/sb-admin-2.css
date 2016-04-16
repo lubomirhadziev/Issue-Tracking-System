@@ -356,3 +356,23 @@ table.dataTable thead .sorting:after {
 .auth-note {
     padding-top: 15px;
 }
+
+.table {
+    margin-bottom: 0 !important;
+}
+
+.navbar-brand {
+    padding: 15px 30px !important;
+}
+
+.nav > li > a {
+    padding: 15px 30px !important;
+}
+
+a[ui-sref], a.dropdown-toggle {
+    cursor: pointer !important;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
