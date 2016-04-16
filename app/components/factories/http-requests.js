@@ -20,7 +20,7 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
                 'Content-Type': 'application/x-www-form-urlencoded'
             };
 
-            cfpLoadingBar.start();
+            //cfpLoadingBar.start();
 
             // append user authorization access token if user is logged in
             var currentUserAccessToken = this._getCurrentUserAccessToken();
@@ -38,12 +38,12 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
                 cache: false
             })
                 .success(function (data) {
-                    cfpLoadingBar.complete();
+                    //cfpLoadingBar.complete();
 
                     deferred.resolve(data);
                 })
                 .error(function (msg, code) {
-                    cfpLoadingBar.complete();
+                    //cfpLoadingBar.complete();
 
                     deferred.reject(msg);
                     $log.error(msg, code);
