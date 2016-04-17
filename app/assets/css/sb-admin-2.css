@@ -6,6 +6,7 @@
 
 body {
     background-color: #f8f8f8;
+    overflow-x: hidden;
 }
 
 #wrapper {
@@ -375,4 +376,10 @@ a[ui-sref], a.dropdown-toggle {
 
 .margin-right-10 {
     margin-right: 10px;
+}
+
+.ng-dirty.ng-invalid {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }

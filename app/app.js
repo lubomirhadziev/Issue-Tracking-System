@@ -3,7 +3,9 @@ var app = angular.module('issueTrackingSystem', [
         'ui.router',
         'oitozero.ngSweetAlert',
         'angular-loading-bar',
-        'angularUtils.directives.dirPagination'
+        'angularUtils.directives.dirPagination',
+        'ngSanitize'
+
     ])
 
     .constant('API_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
