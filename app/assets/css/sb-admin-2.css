@@ -190,11 +190,9 @@ body {
 }
 
 .chat li.left .chat-body {
-    margin-left: 60px;
 }
 
 .chat li.right .chat-body {
-    margin-right: 60px;
 }
 
 .chat li .chat-body p {
@@ -382,4 +380,33 @@ a[ui-sref], a.dropdown-toggle {
     border-color: #a94442;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.issue-status {
+    margin-bottom: 5px;
+}
+
+.chat-textarea {
+    resize: none;
+}
+
+.chat-btn {
+    height: 48px;
+}
+
+.chat-body {
+    padding: 0 !important;
+}
+
+.chat {
+    padding: 15px;
+}
+
+.chat li:last-of-type {
+    border-bottom: none;
+}
+
+.no-comments-text {
+    padding-top: 15px;
+    padding-bottom: 10px;
 }

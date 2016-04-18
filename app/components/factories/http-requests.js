@@ -58,10 +58,11 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
             return this.performRequest(urlName, 'get', urlParams, {});
         },
 
-        'post': function (urlName, postParams) {
+        'post': function (urlName, postParams, urlParams) {
             postParams = postParams || {};
+            urlParams  = urlParams || {};
 
-            return this.performRequest(urlName, 'post', {}, postParams);
+            return this.performRequest(urlName, 'post', urlParams, postParams);
         },
 
         'put': function (urlName, putParams, urlParams) {

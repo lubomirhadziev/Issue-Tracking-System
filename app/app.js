@@ -91,6 +91,25 @@ var app = angular.module('issueTrackingSystem', [
                 }
             })
 
+            .state('authenticated.single_issue', {
+                url:         "/issues/:id",
+                controller:  'SingleIssueCtrl',
+                templateUrl: "modules/issues/single_issue.html",
+                resolve:     {
+                    issueData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_issue', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    commentsData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_issue_comments', {
+                            id: $stateParams.id
+                        });
+                    }]
+                }
+            })
+
             .state('authenticated.single_project_add_issue', {
                 url:         "/projects/:id/add-issue",
                 controller:  'AddIssueCtrl',

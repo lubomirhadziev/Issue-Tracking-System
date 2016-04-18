@@ -6,8 +6,6 @@ app.service('issueService', ['$q', 'httpRequests', function ($q, httpRequests) {
             var deferred   = $q.defer();
             queryUrlParams = queryUrlParams || {};
 
-            console.log(queryUrlParams);
-
             var issueData = {
                 Title:       issue.Title,
                 Description: issue.Description,

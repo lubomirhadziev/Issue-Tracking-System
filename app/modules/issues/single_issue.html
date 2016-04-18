@@ -1,0 +1,201 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Issue Page
+
+                <button
+                        ng-if="isCurrentUserAuthor"
+                        class="pull-right btn btn-success btn-sm"
+                        ui-sref="authenticated.single_project_edit_issue({id: issueData.Id})">
+                    Edit
+                </button>
+            </h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    Issue details
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input
+                                        ng-model="issueData.Title"
+                                        required="required"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Title"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input
+                                        ng-model="issueData.Description"
+                                        required="required"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Description"/>
+                            </div>
+                            <div class="form-group">
+                                <label>AssigneeId</label>
+                                <input
+                                        ng-model="issueData.Assignee.Username"
+                                        required="required"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="AssigneeId"/>
+
+                                <p class="help-block">(Current id: {{ issueData.Assignee.Id }})</p>
+                            </div>
+                            <div class="form-group">
+                                <label>PriorityId</label>
+                                <input
+                                        ng-model="issueData.Priority.Name"
+                                        required="required"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="PriorityId"/>
+
+                                <p class="help-block">(Current id: {{ issueData.Priority.Id }})</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Author</label>
+                                <input
+                                        disabled="disabled"
+                                        ng-model="issueData.Author.Username"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Author"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Project</label>
+                                <input
+                                        disabled="disabled"
+                                        ng-model="issueData.Project.Name"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Project"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <input
+                                        disabled="disabled"
+                                        ng-model="issueData.Status.Name"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Status"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Labels</label>
+
+                                <p>
+                                    {{ issueData.Labels | joinBy: ', ' : 'Name' }}
+                                </p>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="col-lg-12"
+                 ng-if="issueData.AvailableStatuses.length > 0">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-file fa-fw"></i>
+                        Change issue status
+                    </div>
+                    <div class="panel-body">
+
+                        <div
+                                class="issue-status"
+                                ng-repeat="status in issueData.AvailableStatuses">
+                            ----{{ status.Name }}
+
+                            <button
+                                    ng-if="isCurrentUserAssigned"
+                                    ng-click="changeIssueStatus(status)"
+                                    class="btn btn-sm btn-success">Change
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-comments fa-fw"></i>
+                        Comments
+                    </div>
+                    <div class="panel-body chat-body">
+
+                        <ul
+                                id="chat"
+                                class="chat"
+                                ng-if="commentsData.length > 0">
+                            <li class="left clearfix"
+                                ng-repeat="comment in commentsData | orderBy: 'CreatedOn' : false">
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        <strong class="primary-font">
+                                            {{ comment.Author.Username }}
+                                        </strong>
+                                        <small class="pull-right text-muted">
+                                            <i class="fa fa-clock-o fa-fw"></i>
+                                            {{ comment.CreatedOn }}
+                                        </small>
+                                    </div>
+                                    <p>
+                                        {{ comment.Text }}
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <p class="no-comments-text text-center"
+                           ng-if="commentsData.length === 0">No comments yet!</p>
+
+                    </div>
+
+                    <div
+                            ng-show="isCurrentUserAuthor || isCurrentUserAssigned"
+                            class="panel-footer">
+                        <form
+                                ng-submit="addComment()"
+                                name="chatForm">
+                            <div class="input-group">
+                            <textarea
+                                    ng-model="newCommentText"
+                                    required="required"
+                                    class="form-control input-sm chat-textarea"
+                                    placeholder="Type your comment here..."></textarea>
+
+                                <span class="input-group-btn">
+                                    <button
+                                            ng-disabled="chatForm.$invalid || isChatBtnDisabled"
+                                            class="btn btn-warning btn-sm chat-btn">
+                                        Send
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /#page-wrapper -->

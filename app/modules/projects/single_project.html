@@ -119,7 +119,7 @@
                                 ng-if="projectIssues"
                                 dir-paginate="issue in projectIssues | itemsPerPage: 10 | orderBy: 'Id' : true">
                             <td>
-                                <a ui-sref="authenticated.single_project_edit_issue({id: issue.Id})"
+                                <a ui-sref="authenticated.single_issue({id: issue.Id})"
                                    title="{{ issue.Title }}">
                                     {{ issue.Title }}
                                 </a>
