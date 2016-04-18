@@ -1,11 +1,9 @@
 app
-    .controller('SingleProjectCtrl', ['$scope', 'httpRequests', 'errorsHandler', 'user', 'projectData', 'projectIssues', function ($scope, httpRequests, errorsHandler, user, projectData, projectIssues) {
+    .controller('SingleProjectCtrl', ['$scope', 'user', 'projectData', 'projectIssues', function ($scope, user, projectData, projectIssues) {
 
         $scope.isCurrentUserLead = (user.getLoggedUserData().Id === projectData.Lead.Id);
-        $scope.projectData = projectData;
-        $scope.projectIssues = projectIssues;
-
-        console.log($scope.isCurrentUserLead);
+        $scope.projectData       = projectData;
+        $scope.projectIssues     = projectIssues;
 
     }])
 

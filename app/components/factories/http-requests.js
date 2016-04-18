@@ -15,8 +15,8 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
 
         'performRequest': function (urlName, requestType, urlParams, postParams) {
             var deferred = $q.defer();
-            var url = this.formatUrl(api.getUrl(urlName), urlParams);
-            var headers = {
+            var url      = this.formatUrl(api.getUrl(urlName), urlParams);
+            var headers  = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             };
 
@@ -31,11 +31,11 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
 
             // prepare and make request
             $http({
-                url: url,
-                method: requestType,
+                url:     url,
+                method:  requestType,
                 headers: headers,
-                data: (typeof postParams === "undefined" ? {} : $.param(postParams)),
-                cache: false
+                data:    (typeof postParams === "undefined" ? {} : $.param(postParams)),
+                cache:   false
             })
                 .success(function (data) {
                     //cfpLoadingBar.complete();
@@ -64,10 +64,31 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
             return this.performRequest(urlName, 'post', {}, postParams);
         },
 
-        'put': function (urlName, putParams) {
+        'put': function (urlName, putParams, urlParams) {
             putParams = putParams || {};
+            urlParams = urlParams || {};
 
-            return this.performRequest(urlName, 'put', {}, putParams);
+            return this.performRequest(urlName, 'put', urlParams, putParams);
+        },
+
+        'methodFromString': function (urlName, method, urlParams, postParams) {
+            switch (method) {
+                case "GET":
+                    return this.get(urlName, urlParams);
+                    break;
+
+                case "POST":
+                    return this.post(urlName, postParams);
+                    break;
+
+                case "PUT":
+                    return this.put(urlName, postParams, urlParams);
+                    break;
+
+                default:
+                    throw new Error('Invalid method name! Valid methods are: GET, POST, PUT');
+                    break;
+            }
         }
 
     };

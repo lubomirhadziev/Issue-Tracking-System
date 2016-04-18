@@ -29,10 +29,12 @@
     <link href="/app/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/app/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     <link href="/app/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/app/bower_components/selectize/dist/css/selectize.default.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="/app/bower_components/sweetalert/dist/sweetalert.css"/>
     <link rel="stylesheet" href="/app/bower_components/angular-loading-bar/build/loading-bar.min.css"/>
 
+    <script src="/app/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/app/bower_components/angular/angular.min.js"></script>
 
 </head>
@@ -40,17 +42,14 @@
 <body ng-cloak>
 
 <div id="wrapper">
-
     <div
             ng-if="authenticatedState"
             ng-include="'modules/template/header.html'"></div>
 
     <div ui-view></div>
-
 </div>
 
 <!-- TEMPLATE LIBRARIES -->
-<script src="/app/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/app/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/app/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 <script src="/app/assets/js/sb-admin-2.js"></script>
@@ -69,6 +68,8 @@
 <script src="/app/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
 <script src="/app/bower_components/angularUtils-pagination/dirPagination.js"></script>
+<script src="/app/bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
+<script src="/app/bower_components/angular-selectize2/dist/angular-selectize.js"></script>
 
 
 <!--<script src="/app/bower_components/fancybox-plus/src/jquery.fancybox-plus.js"></script>-->
@@ -83,6 +84,7 @@
 <script src="/app/components/factories/http-requests.js"></script>
 
 <script src="/app/components/services/authentication.js"></script>
+<script src="/app/components/services/issue-service.js"></script>
 
 <script src="/app/components/directives/side-menu.js"></script>
 <script src="/app/components/filters/join-by.js"></script>

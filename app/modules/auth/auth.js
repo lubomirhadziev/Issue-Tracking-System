@@ -1,7 +1,7 @@
 app
     .controller('AuthLoginCtrl', ['$scope', '$state', 'authentication', 'errorsHandler', function ($scope, $state, authentication, errorsHandler) {
-        $scope.userData = {
-            Email: null,
+        $scope.userData            = {
+            Email:    null,
             Password: null
         };
         $scope.isSubmitBtnDisabled = false;
@@ -21,9 +21,9 @@ app
     }])
 
     .controller('AuthRegisterCtrl', ['$scope', '$state', 'httpRequests', 'authentication', 'errorsHandler', function ($scope, $state, httpRequests, authentication, errorsHandler) {
-        $scope.userData = {
-            Email: null,
-            Password: null,
+        $scope.userData            = {
+            Email:           null,
+            Password:        null,
             ConfirmPassword: null
         };
         $scope.isSubmitBtnDisabled = false;

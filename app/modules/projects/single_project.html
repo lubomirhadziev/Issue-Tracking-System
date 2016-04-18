@@ -5,14 +5,14 @@
                 {{ projectData.Name }}
 
                 <button
-                        ng-if="!isCurrentUserLead"
+                        ng-if="isCurrentUserLead"
                         class="pull-right btn btn-success btn-sm"
                         ui-sref="authenticated.single_project_add_issue({id: projectData.Id})">
                     Add Issue
                 </button>
 
                 <button
-                        ng-if="!isCurrentUserLead"
+                        ng-if="isCurrentUserLead"
                         class="pull-right margin-right-10 btn btn-success btn-sm"
                         ui-sref="authenticated.single_project.add_issue({id: projectData.Id})">
                     Edit
@@ -119,7 +119,8 @@
                                 ng-if="projectIssues"
                                 dir-paginate="issue in projectIssues | itemsPerPage: 10 | orderBy: 'Id' : true">
                             <td>
-                                <a title="{{ issue.Title }}">
+                                <a ui-sref="authenticated.single_project_edit_issue({id: issue.Id})"
+                                   title="{{ issue.Title }}">
                                     {{ issue.Title }}
                                 </a>
                             </td>

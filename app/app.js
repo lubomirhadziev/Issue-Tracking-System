@@ -4,8 +4,8 @@ var app = angular.module('issueTrackingSystem', [
         'oitozero.ngSweetAlert',
         'angular-loading-bar',
         'angularUtils.directives.dirPagination',
-        'ngSanitize'
-
+        'ngSanitize',
+        'selectize'
     ])
 
     .constant('API_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
@@ -21,24 +21,24 @@ var app = angular.module('issueTrackingSystem', [
 
         $stateProvider
             .state('root', {
-                abstract: true,
-                template: '<ui-view/>',
+                abstract:   true,
+                template:   '<ui-view/>',
                 controller: "RootCtrl",
-                data: {
-                    requireUserLoggedIn: false,
+                data:       {
+                    requireUserLoggedIn:    false,
                     requireUserNotLoggedIn: true
                 }
             })
 
             .state('root.login', {
-                url: "/login",
-                controller: 'AuthLoginCtrl',
+                url:         "/login",
+                controller:  'AuthLoginCtrl',
                 templateUrl: "modules/auth/login.html"
             })
 
             .state('root.register', {
-                url: "/register",
-                controller: 'AuthRegisterCtrl',
+                url:         "/register",
+                controller:  'AuthRegisterCtrl',
                 templateUrl: "modules/auth/register.html"
             })
 
@@ -47,25 +47,25 @@ var app = angular.module('issueTrackingSystem', [
              */
 
             .state('authenticated', {
-                abstract: true,
-                template: '<ui-view/>',
+                abstract:   true,
+                template:   '<ui-view/>',
                 controller: "AuthenticatedCtrl",
-                data: {
-                    requireUserLoggedIn: true,
+                data:       {
+                    requireUserLoggedIn:    true,
                     requireUserNotLoggedIn: false
                 }
             })
 
             .state('authenticated.logout', {
-                url: "/logout",
+                url:        "/logout",
                 controller: 'AuthLogoutCtrl'
             })
 
             .state('authenticated.dashboard', {
-                url: "/dashboard",
-                controller: 'DashboardCtrl',
+                url:         "/dashboard",
+                controller:  'DashboardCtrl',
                 templateUrl: "modules/dashboard/dashboard.html",
-                resolve: {
+                resolve:     {
                     projects: ['httpRequests', function (httpRequests) {
                         return httpRequests.get('projects');
                     }]
@@ -73,10 +73,10 @@ var app = angular.module('issueTrackingSystem', [
             })
 
             .state('authenticated.single_project', {
-                url: "/projects/:id",
-                controller: 'SingleProjectCtrl',
+                url:         "/projects/:id",
+                controller:  'SingleProjectCtrl',
                 templateUrl: "modules/projects/single_project.html",
-                resolve: {
+                resolve:     {
                     projectData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
                         return httpRequests.get('single_project', {
                             id: $stateParams.id
@@ -92,12 +92,33 @@ var app = angular.module('issueTrackingSystem', [
             })
 
             .state('authenticated.single_project_add_issue', {
-                url: "/projects/:id/add-issue",
-                controller: 'AddIssueCtrl',
-                templateUrl: "modules/issues/add_issue.html",
-                resolve: {
+                url:         "/projects/:id/add-issue",
+                controller:  'AddIssueCtrl',
+                templateUrl: "modules/issues/form.html",
+                resolve:     {
                     projectData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
                         return httpRequests.get('single_project', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    allUsers: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('users');
+                    }],
+
+                    allProjects: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('projects');
+                    }]
+                }
+            })
+
+            .state('authenticated.single_project_edit_issue', {
+                url:         "/issues/:id",
+                controller:  'EditIssueCtrl',
+                templateUrl: "modules/issues/form.html",
+                resolve:     {
+                    issueData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_issue', {
                             id: $stateParams.id
                         });
                     }],
@@ -114,7 +135,7 @@ var app = angular.module('issueTrackingSystem', [
         ;
     }])
 
-    .run(['$rootScope', '$state', 'user', function ($rootScope, $state, user) {
+    .run(['$rootScope', '$state', '$anchorScroll', 'user', function ($rootScope, $state, $anchorScroll, user) {
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             var stateData = toState.data;
@@ -136,6 +157,11 @@ var app = angular.module('issueTrackingSystem', [
                     return false;
                 }
             }
+        });
+
+        // fix scroll issue
+        $rootScope.$on("$locationChangeSuccess", function () {
+            $anchorScroll();
         });
 
     }]);
