@@ -123,6 +123,12 @@ var app = angular.module('issueTrackingSystem', [
                         });
                     }],
 
+                    projectData: ['issueData', 'httpRequests', function (issueData, httpRequests) {
+                        return httpRequests.get('single_project', {
+                            id: issueData.Project.Id
+                        });
+                    }],
+
                     allUsers: ['httpRequests', function (httpRequests) {
                         return httpRequests.get('users');
                     }],

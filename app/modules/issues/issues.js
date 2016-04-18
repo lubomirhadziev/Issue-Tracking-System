@@ -44,7 +44,7 @@ app
         };
     }])
 
-    .controller('EditIssueCtrl', ['$scope', '$stateParams', '$state', 'httpRequests', 'errorsHandler', 'issueService', 'SweetAlert', 'issueData', 'allUsers', 'allProjects', function ($scope, $stateParams, $state, httpRequests, errorsHandler, issueService, SweetAlert, issueData, allUsers, allProjects) {
+    .controller('EditIssueCtrl', ['$scope', '$stateParams', '$state', 'httpRequests', 'errorsHandler', 'issueService', 'SweetAlert', 'issueData', 'projectData', 'allUsers', 'allProjects', function ($scope, $stateParams, $state, httpRequests, errorsHandler, issueService, SweetAlert, issueData, projectData, allUsers, allProjects) {
         $scope.title               = "Edit Issue";
         $scope.isSubmitBtnDisabled = false;
 
@@ -52,8 +52,8 @@ app
         $scope.allUsers  = allUsers;
         $scope.allProjects = allProjects;
 
-        $scope.projectData = {};
-        $scope.priorities  = [];
+        $scope.projectData = projectData;
+        $scope.priorities  = projectData.Priorities;
 
         $scope.issue = {
             Title:       issueData.Title,
@@ -72,17 +72,6 @@ app
             delimiter:   ',',
             placeholder: 'Pick some labels'
         };
-
-        // fetch project data
-        httpRequests.get('single_project', {
-                id: issueData.Project.Id
-            })
-            .then(function (projectData) {
-                $scope.projectData = projectData;
-                $scope.priorities  = projectData.Priorities;
-
-                $scope.projectData.Labels = _.extend($scope.projectData.Labels, issueData.Labels);
-            });
 
         // make update
         $scope.doIssue = function () {
