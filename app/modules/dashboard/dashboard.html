@@ -145,6 +145,46 @@
             </div>
         </div>
 
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    Affiliated Porjects
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr ng-if="affiliatedPorjects.length === 0">
+                            <td class="text-center" colspan="2">
+                                Affiliated projects not found!
+                            </td>
+                        </tr>
+
+                        <tr
+                                ng-if="affiliatedPorjects"
+                                dir-paginate="project in affiliatedPorjects | itemsPerPage: 10 | orderBy: 'Id' : true">
+                            <td>
+                                <a ui-sref="authenticated.single_project({id: project.Id})" title="{{ project.Name }}">
+                                    {{ project.Name }}
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    <dir-pagination-controls></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- /.row -->
 </div>
