@@ -7,7 +7,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -22,17 +22,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-8 col-md-6">
             <div class="panel panel-green">
                 <div class="panel-heading">
                     <div class="row">
@@ -40,72 +32,20 @@
                             <i class="fa fa-tasks fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">12</div>
-                            <div>New Tasks!</div>
+                            <div class="huge">
+                                ~{{ userIssuesPaginationData.totalItemsCount }}
+                            </div>
+                            <div>Assigned Issues</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-yellow">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-shopping-cart fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">124</div>
-                            <div>New Orders!</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-red">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-support fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">13</div>
-                            <div>Support Tickets!</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
             </div>
         </div>
     </div>
     <!-- /.row -->
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-list-alt fa-fw"></i>
@@ -128,7 +68,8 @@
 
                         <tr
                                 ng-if="affiliatedPorjects"
-                                dir-paginate="project in affiliatedPorjects | itemsPerPage: 10 | orderBy: 'Id' : true">
+                                dir-paginate="project in affiliatedPorjects | itemsPerPage: 10 | orderBy: 'Id' : true"
+                                pagination-id="affiliatedProjectsPagination">
                             <td>
                                 <a ui-sref="authenticated.single_project({id: project.Id})" title="{{ project.Name }}">
                                     {{ project.Name }}
@@ -139,48 +80,67 @@
                         </tbody>
                     </table>
 
-
-                    <dir-pagination-controls></dir-pagination-controls>
+                    <dir-pagination-controls pagination-id="affiliatedProjectsPagination"></dir-pagination-controls>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-8 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-list-alt fa-fw"></i>
-                    Affiliated Porjects
+                    <i class="fa fa-archive fa-fw"></i>
+                    Assigned Issues
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Project</th>
+                            <th>Due Date</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        <tr ng-if="affiliatedPorjects.length === 0">
-                            <td class="text-center" colspan="2">
-                                Affiliated projects not found!
+                        <tr ng-if="userIssues.length === 0">
+                            <td class="text-center" colspan="4">
+                                Assigned Issues not found!
                             </td>
                         </tr>
 
                         <tr
-                                ng-if="affiliatedPorjects"
-                                dir-paginate="project in affiliatedPorjects | itemsPerPage: 10 | orderBy: 'Id' : true">
+                                ng-if="userIssues.length > 0"
+                                dir-paginate="issue in userIssues | itemsPerPage: userIssuesPaginationData.itemsPerPage"
+                                total-items="userIssuesPaginationData.totalItemsCount"
+                                current-page="userIssuesPaginationData.currentPage"
+                                pagination-id="userIssuesPagination">
                             <td>
-                                <a ui-sref="authenticated.single_project({id: project.Id})" title="{{ project.Name }}">
-                                    {{ project.Name }}
+                                <a ui-sref="authenticated.single_issue({id: issue.Id})" title="{{ issue.Title }}">
+                                    {{ issue.Title }}
                                 </a>
+                            </td>
+                            <td>
+                                {{ issue.Description }}
+                            </td>
+                            <td>
+                                <a ui-sref="authenticated.single_project({id: issue.Project.Id})"
+                                   title="{{ issue.Project.Name }}">
+                                    {{ issue.Project.Name }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ issue.DueDate | date: 'dd.MM.yyyy' }}
                             </td>
                         </tr>
 
                         </tbody>
                     </table>
 
-
-                    <dir-pagination-controls></dir-pagination-controls>
+                    <dir-pagination-controls
+                            ng-if="userIssues.length !== 0"
+                            on-page-change="loadUserIssues(newPageNumber)"
+                            pagination-id="userIssuesPagination"></dir-pagination-controls>
                 </div>
             </div>
         </div>

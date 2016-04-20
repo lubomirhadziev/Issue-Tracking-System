@@ -9,35 +9,37 @@ app.controller('DashboardCtrl', ['$scope', 'httpRequests', 'errorsHandler', 'use
     });
 
     // user's issues
-    $scope.userIssuesPageData = {
-        itemsPerPage: 3,
-        totalPages:   0,
-        currentPage:  0
+    $scope.userIssuesPaginationData = {
+        itemsPerPage:         10,
+        totalItemsCount:      -1,
+        currentPage:          1,
+        isPaginationDisabled: true
     };
-    $scope.userIssues         = [];
+    $scope.userIssues               = [];
 
-    $scope.loadUserIssues = function (t1, t2) {
-
+    $scope.loadUserIssues = function (newPage) {
         httpRequests.get('issues_me_filter', {
-                pageSize:   t1,
-                pageNumber: t2,
-                orderBy:    'DueDate desc'
+                pageSize:   $scope.userIssuesPaginationData.itemsPerPage,
+                pageNumber: newPage,
+                orderBy:    'DueDate asc'
             })
             .then(function (response) {
-                $scope.userIssues = _.extend($scope.userIssues, response.Issues);
-                console.log(response);
+                $scope.userIssues = response.Issues;
+                $scope.userIssuesPaginationData.currentPage = newPage;
+
+                if ($scope.userIssuesPaginationData.totalItemsCount === -1) {
+                    if (response.TotalPages === 1) {
+                        $scope.userIssuesPaginationData.totalItemsCount = response.Issues.length;
+                    } else {
+                        $scope.userIssuesPaginationData.totalItemsCount = $scope.userIssuesPaginationData.itemsPerPage * response.TotalPages;
+                    }
+                }
             }, function (err) {
                 errorsHandler.handle(err);
             });
     };
 
-    $scope.loadUserIssues(5, 1);
-    $scope.loadUserIssues(5, 2);
-    $scope.loadUserIssues(5, 3);
-    $scope.loadUserIssues(5, 4);
-    $scope.loadUserIssues(5, 5);
-    $scope.loadUserIssues(5, 6);
-    $scope.loadUserIssues(5, 7);
-
+    // load user issues for first time
+    $scope.loadUserIssues($scope.userIssuesPaginationData.currentPage);
 
 }]);
