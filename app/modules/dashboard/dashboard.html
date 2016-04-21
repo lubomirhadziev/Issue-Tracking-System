@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">
-                                {{ affiliatedPorjects.length }}
+                                {{ affiliatedProjects.length }}
                             </div>
                             <div>Affiliated Projects</div>
                         </div>
@@ -49,7 +49,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-list-alt fa-fw"></i>
-                    Affiliated Porjects
+                    Affiliated Projects
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped">
@@ -60,15 +60,15 @@
                         </thead>
                         <tbody>
 
-                        <tr ng-if="affiliatedPorjects.length === 0">
+                        <tr ng-if="affiliatedProjects.length === 0">
                             <td class="text-center" colspan="2">
                                 Affiliated projects not found!
                             </td>
                         </tr>
 
                         <tr
-                                ng-if="affiliatedPorjects"
-                                dir-paginate="project in affiliatedPorjects | itemsPerPage: 10 | orderBy: 'Id' : true"
+                                ng-if="affiliatedProjects.length > 0"
+                                dir-paginate="project in affiliatedProjects | itemsPerPage: 10 | orderBy: 'Id' : true"
                                 pagination-id="affiliatedProjectsPagination">
                             <td>
                                 <a ui-sref="authenticated.single_project({id: project.Id})" title="{{ project.Name }}">

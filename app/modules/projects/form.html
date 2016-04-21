@@ -1,0 +1,89 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                {{ title }}
+            </h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                    Form
+                </div>
+                <div class="panel-body">
+                    <form
+                            ng-submit="doProject()"
+                            name="projectForm"
+                            role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input
+                                        ng-model="project.Name"
+                                        required="required"
+                                        type="text"
+                                        class="form-control"
+                                        ng-change="projectNameChanged()"
+                                        placeholder="Name"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input
+                                        ng-model="project.Description"
+                                        required="required"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Description"/>
+                            </div>
+                            <div class="form-group">
+                                <label>ProjectKey</label>
+                                <input
+                                        ng-model="project.ProjectKey"
+                                        required="required"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="ProjectKey"/>
+                            </div>
+                            <div class="form-group">
+                                <label>LeadId</label>
+
+                                <select
+                                        required="required"
+                                        ng-model="project.LeadId"
+                                        ng-options="user as user.Username for user in allUsers track by user.Id"
+                                        class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Labels</label>
+                                <selectize
+                                        config="selectConfig"
+                                        ng-model="project.Labels"></selectize>
+                            </div>
+                            <div class="form-group">
+                                <label>Priorities</label>
+                                <selectize
+                                        config="selectConfig"
+                                        ng-model="project.Priorities"></selectize>
+                            </div>
+                            <div class="form-group">
+                                <button
+                                        ng-disabled="projectForm.$invalid || isSubmitBtnDisabled"
+                                        type="submit"
+                                        class="btn btn-success">Submit
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /#page-wrapper -->

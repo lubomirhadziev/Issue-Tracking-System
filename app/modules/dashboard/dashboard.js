@@ -4,7 +4,7 @@ app.controller('DashboardCtrl', ['$scope', 'httpRequests', 'errorsHandler', 'use
     var currentUserData = user.getLoggedUserData();
 
     // filter affiliated projects
-    $scope.affiliatedPorjects = _.filter(projects, function (project) {
+    $scope.affiliatedProjects = _.filter(projects, function (project) {
         return (project.Lead.Id === currentUserData.Id);
     });
 
@@ -28,11 +28,7 @@ app.controller('DashboardCtrl', ['$scope', 'httpRequests', 'errorsHandler', 'use
                 $scope.userIssuesPaginationData.currentPage = newPage;
 
                 if ($scope.userIssuesPaginationData.totalItemsCount === -1) {
-                    if (response.TotalPages === 1) {
-                        $scope.userIssuesPaginationData.totalItemsCount = response.Issues.length;
-                    } else {
-                        $scope.userIssuesPaginationData.totalItemsCount = $scope.userIssuesPaginationData.itemsPerPage * response.TotalPages;
-                    }
+                    $scope.userIssuesPaginationData.totalItemsCount = $scope.userIssuesPaginationData.itemsPerPage * response.TotalPages;
                 }
             }, function (err) {
                 errorsHandler.handle(err);

@@ -54,7 +54,7 @@ app
 
     }])
 
-    .controller('AddIssueCtrl', ['$scope', '$stateParams', '$state', 'httpRequests', 'errorsHandler', 'user', 'issueService', 'projectData', 'allUsers', 'allProjects', function ($scope, $stateParams, $state, httpRequests, errorsHandler, user, issueService, projectData, allUsers, allProjects) {
+    .controller('AddIssueCtrl', ['$scope', '$state', '$stateParams', 'httpRequests', 'errorsHandler', 'user', 'issueService', 'projectData', 'allUsers', 'allProjects', function ($scope, $state, $stateParams, httpRequests, errorsHandler, user, issueService, projectData, allUsers, allProjects) {
 
         // check user permissions
         if (user.getLoggedUserData().Id !== projectData.Lead.Id) {
@@ -130,6 +130,7 @@ app
         $scope.projectData = projectData;
         $scope.priorities  = projectData.Priorities;
 
+
         $scope.issue = {
             Title:       issueData.Title,
             Description: issueData.Description,
@@ -139,6 +140,9 @@ app
             PriorityId:  issueData.Priority.Id.toString(),
             Labels:      _.pluck(issueData.Labels, 'Name')
         };
+
+        console.log($scope.issue);
+
 
         $scope.labelsSelectConfig = {
             create:      true,

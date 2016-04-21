@@ -72,6 +72,28 @@ var app = angular.module('issueTrackingSystem', [
                 }
             })
 
+            .state('authenticated.all_projects', {
+                url:         "/projects",
+                controller:  'AllProjectsCtrl',
+                templateUrl: "modules/projects/all_projects.html",
+                resolve:     {
+                    projects: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('projects');
+                    }]
+                }
+            })
+
+            .state('authenticated.add_project', {
+                url:         "/projects/add",
+                controller:  'AddProjectCtrl',
+                templateUrl: "modules/projects/form.html",
+                resolve:     {
+                    allUsers: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('users');
+                    }]
+                }
+            })
+
             .state('authenticated.single_project', {
                 url:         "/projects/:id",
                 controller:  'SingleProjectCtrl',
@@ -132,7 +154,7 @@ var app = angular.module('issueTrackingSystem', [
             })
 
             .state('authenticated.single_project_edit_issue', {
-                url:         "/issues/:id",
+                url:         "/issues/:id/edit",
                 controller:  'EditIssueCtrl',
                 templateUrl: "modules/issues/form.html",
                 resolve:     {
