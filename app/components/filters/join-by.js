@@ -1,4 +1,5 @@
-app
+angular.module('issueTrackingSystem.filters.joinBy', [])
+
     .filter('joinBy', function () {
         return function (input, delimiter, objectColumnName) {
             if (objectColumnName) {

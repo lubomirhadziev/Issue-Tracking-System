@@ -1,4 +1,5 @@
-app
+angular.module('issueTrackingSystem.factories.api', [])
+
     .factory('api', ['API_URL', function (API_URL) {
         var availableApiUrls = {
             "auth_register":              API_URL + 'api/Account/Register',

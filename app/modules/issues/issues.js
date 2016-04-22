@@ -1,4 +1,74 @@
-app
+angular.module('issueTrackingSystem.issuesModule', [])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider
+            .state('authenticated.single_issue', {
+                url:         "/issues/:id",
+                controller:  'SingleIssueCtrl',
+                templateUrl: "modules/issues/single_issue.html",
+                resolve:     {
+                    issueData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_issue', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    commentsData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_issue_comments', {
+                            id: $stateParams.id
+                        });
+                    }]
+                }
+            })
+
+            .state('authenticated.single_project_add_issue', {
+                url:         "/projects/:id/add-issue",
+                controller:  'AddIssueCtrl',
+                templateUrl: "modules/issues/form.html",
+                resolve:     {
+                    projectData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_project', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    allUsers: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('users');
+                    }],
+
+                    allProjects: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('projects');
+                    }]
+                }
+            })
+
+            .state('authenticated.single_project_edit_issue', {
+                url:         "/issues/:id/edit",
+                controller:  'EditIssueCtrl',
+                templateUrl: "modules/issues/form.html",
+                resolve:     {
+                    issueData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_issue', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    projectData: ['issueData', 'httpRequests', function (issueData, httpRequests) {
+                        return httpRequests.get('single_project', {
+                            id: issueData.Project.Id
+                        });
+                    }],
+
+                    allUsers: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('users');
+                    }],
+
+                    allProjects: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('projects');
+                    }]
+                }
+            });
+    }])
 
     .controller('SingleIssueCtrl', ['$scope', '$state', 'httpRequests', 'errorsHandler', 'SweetAlert', 'user', 'issueData', 'commentsData', function ($scope, $state, httpRequests, errorsHandler, SweetAlert, user, issueData, commentsData) {
 

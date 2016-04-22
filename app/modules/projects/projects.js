@@ -1,4 +1,71 @@
-app
+angular.module('issueTrackingSystem.projectsModule', [])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider
+            .state('authenticated.all_projects', {
+                url:         "/projects",
+                controller:  'AllProjectsCtrl',
+                templateUrl: "modules/projects/all_projects.html",
+                data:        {
+                    requireAdminLoggedIn: true
+                },
+                resolve:     {
+                    projects: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('projects');
+                    }]
+                }
+            })
+
+            .state('authenticated.add_project', {
+                url:         "/projects/add",
+                controller:  'AddProjectCtrl',
+                templateUrl: "modules/projects/form.html",
+                data:        {
+                    requireAdminLoggedIn: true
+                },
+                resolve:     {
+                    allUsers: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('users');
+                    }]
+                }
+            })
+
+            .state('authenticated.edit_project', {
+                url:         "/projects/:id/edit",
+                controller:  'EditProjectCtrl',
+                templateUrl: "modules/projects/form.html",
+                resolve:     {
+                    projectData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_project', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    allUsers: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('users');
+                    }]
+                }
+            })
+
+            .state('authenticated.single_project', {
+                url:         "/projects/:id",
+                controller:  'SingleProjectCtrl',
+                templateUrl: "modules/projects/single_project.html",
+                resolve:     {
+                    projectData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_project', {
+                            id: $stateParams.id
+                        });
+                    }],
+
+                    projectIssues: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_project_issues', {
+                            id: $stateParams.id
+                        });
+                    }]
+                }
+            });
+    }])
 
     .controller('AllProjectsCtrl', ['$scope', 'projects', function ($scope, projects) {
         $scope.allProjects = _.chain(projects).sortBy('Id').reverse().value();

@@ -1,4 +1,25 @@
-app
+angular.module('issueTrackingSystem.authModule', [])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider
+            .state('root.login', {
+                url:         "/login",
+                controller:  'AuthLoginCtrl',
+                templateUrl: "modules/auth/login.html"
+            })
+
+            .state('root.register', {
+                url:         "/register",
+                controller:  'AuthRegisterCtrl',
+                templateUrl: "modules/auth/register.html"
+            })
+
+            .state('authenticated.logout', {
+                url:        "/logout",
+                controller: 'AuthLogoutCtrl'
+            });
+    }])
+
     .controller('AuthLoginCtrl', ['$scope', '$state', 'authentication', 'errorsHandler', function ($scope, $state, authentication, errorsHandler) {
         $scope.userData            = {
             Email:    null,

@@ -1,4 +1,6 @@
-app.service('issueService', ['$q', 'httpRequests', function ($q, httpRequests) {
+angular.module('issueTrackingSystem.services.issue', [])
+
+    .service('issueService', ['$q', 'httpRequests', function ($q, httpRequests) {
 
     var issueService = {
 

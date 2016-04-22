@@ -1,4 +1,6 @@
-app.factory('user', ['$q', 'httpRequests', 'authentication', function ($q, httpRequests, authentication) {
+angular.module('issueTrackingSystem.factories.user', [])
+
+    .factory('user', ['$q', 'httpRequests', 'authentication', function ($q, httpRequests, authentication) {
 
     var user = {
 

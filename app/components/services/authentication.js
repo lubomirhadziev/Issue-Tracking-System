@@ -1,83 +1,85 @@
-app.service('authentication', ['$q', 'httpRequests', function ($q, httpRequests) {
+angular.module('issueTrackingSystem.services.authentication', [])
 
-    var authentication = {
+    .service('authentication', ['$q', 'httpRequests', function ($q, httpRequests) {
 
-        'USER_TOKEN_NAME': 'user_token',
+        var authentication = {
 
-        '_saveToken': function (token) {
-            window.sessionStorage.setItem(this.USER_TOKEN_NAME, token);
-        },
+            'USER_TOKEN_NAME': 'user_token',
 
-        'getToken': function () {
-            return window.sessionStorage.getItem(this.USER_TOKEN_NAME);
-        },
+            '_saveToken': function (token) {
+                window.sessionStorage.setItem(this.USER_TOKEN_NAME, token);
+            },
 
-        'removeToken': function () {
-            window.sessionStorage.removeItem(this.USER_TOKEN_NAME);
-        },
+            'getToken': function () {
+                return window.sessionStorage.getItem(this.USER_TOKEN_NAME);
+            },
 
-        "_fetchAuthToken": function (email, password) {
-            var deferred = $q.defer();
+            'removeToken': function () {
+                window.sessionStorage.removeItem(this.USER_TOKEN_NAME);
+            },
 
-            httpRequests.methodFromString('auth_token', 'POST', {}, $.param({
-                Username:   email,
-                Password:   password,
-                grant_type: "password"
-            }), {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            })
-                .then(function (response) {
-                    deferred.resolve(response);
-                }, function (err) {
-                    deferred.reject(err);
-                });
+            "_fetchAuthToken": function (email, password) {
+                var deferred = $q.defer();
 
-            //httpRequests.post('auth_token', {
-            //        Username:   email,
-            //        Password:   password,
-            //        grant_type: "password"
-            //    })
-            //    .then(function (response) {
-            //        deferred.resolve(response);
-            //    }, function (err) {
-            //        deferred.reject(err);
-            //    });
+                httpRequests.methodFromString('auth_token', 'POST', {}, $.param({
+                        Username:   email,
+                        Password:   password,
+                        grant_type: "password"
+                    }), {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    })
+                    .then(function (response) {
+                        deferred.resolve(response);
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
 
-            return deferred.promise;
-        },
+                //httpRequests.post('auth_token', {
+                //        Username:   email,
+                //        Password:   password,
+                //        grant_type: "password"
+                //    })
+                //    .then(function (response) {
+                //        deferred.resolve(response);
+                //    }, function (err) {
+                //        deferred.reject(err);
+                //    });
 
-        '_saveCurrentUserData': function (userData) {
-            window.sessionStorage.setItem('user_data', JSON.stringify(userData));
-        },
+                return deferred.promise;
+            },
 
-        'signInUser': function (email, password) {
-            var deferred = $q.defer();
-            var _this    = this;
+            '_saveCurrentUserData': function (userData) {
+                window.sessionStorage.setItem('user_data', JSON.stringify(userData));
+            },
 
-            _this._fetchAuthToken(email, password)
-                .then(function (response) {
-                    // save user access token
-                    _this._saveToken(response.access_token);
+            'signInUser': function (email, password) {
+                var deferred = $q.defer();
+                var _this    = this;
 
-                    // save current logged user data in session storage
-                    httpRequests.get('current_user_data')
-                        .then(function (currentUserResponse) {
-                            _this._saveCurrentUserData(currentUserResponse);
+                _this._fetchAuthToken(email, password)
+                    .then(function (response) {
+                        // save user access token
+                        _this._saveToken(response.access_token);
 
-                            // return resolve
-                            deferred.resolve(currentUserResponse);
-                        }, function (err) {
-                            deferred.reject(err);
-                        });
+                        // save current logged user data in session storage
+                        httpRequests.get('current_user_data')
+                            .then(function (currentUserResponse) {
+                                _this._saveCurrentUserData(currentUserResponse);
 
-                }, function (err) {
-                    deferred.reject(err);
-                });
+                                // return resolve
+                                deferred.resolve(currentUserResponse);
+                            }, function (err) {
+                                deferred.reject(err);
+                            });
 
-            return deferred.promise;
-        }
+                    }, function (err) {
+                        deferred.reject(err);
+                    });
 
-    };
+                return deferred.promise;
+            }
 
-    return authentication;
-}]);
+        };
+
+        return authentication;
+    }]);

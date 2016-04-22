@@ -1,4 +1,6 @@
-app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', function ($q, $http, $log, api, cfpLoadingBar) {
+angular.module('issueTrackingSystem.factories.httpRequests', [])
+
+    .factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', function ($q, $http, $log, api, cfpLoadingBar) {
     var request = {
 
         "_headers": {},

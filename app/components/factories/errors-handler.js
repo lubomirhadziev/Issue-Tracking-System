@@ -1,4 +1,5 @@
-app
+angular.module('issueTrackingSystem.factories.errorsHandler', [])
+
     .factory('errorsHandler', ['SweetAlert', function (SweetAlert) {
 
         var errorsHandler = {
