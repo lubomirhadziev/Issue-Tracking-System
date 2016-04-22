@@ -57,7 +57,7 @@ app
     .controller('AddIssueCtrl', ['$scope', '$state', '$stateParams', 'httpRequests', 'errorsHandler', 'user', 'issueService', 'projectData', 'allUsers', 'allProjects', function ($scope, $state, $stateParams, httpRequests, errorsHandler, user, issueService, projectData, allUsers, allProjects) {
 
         // check user permissions
-        if (user.getLoggedUserData().Id !== projectData.Lead.Id) {
+        if (!user.getLoggedUserData().isAdmin && user.getLoggedUserData().Id !== projectData.Lead.Id) {
             $state.go('authenticated.single_project', {
                 id: $stateParams.id
             });
@@ -112,7 +112,7 @@ app
     .controller('EditIssueCtrl', ['$scope', '$stateParams', '$state', 'httpRequests', 'errorsHandler', 'user', 'issueService', 'SweetAlert', 'issueData', 'projectData', 'allUsers', 'allProjects', function ($scope, $stateParams, $state, httpRequests, errorsHandler, user, issueService, SweetAlert, issueData, projectData, allUsers, allProjects) {
 
         // check user permissions
-        if (user.getLoggedUserData().Id !== projectData.Lead.Id) {
+        if (!user.getLoggedUserData().isAdmin && user.getLoggedUserData().Id !== projectData.Lead.Id && user.getLoggedUserData().Id !== issueData.Author.Id) {
             $state.go('authenticated.single_issue', {
                 id: $stateParams.id
             });

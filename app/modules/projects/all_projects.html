@@ -37,7 +37,7 @@
                                 dir-paginate="project in allProjects | itemsPerPage: 16"
                                 pagination-id="affiliatedProjectsPagination">
                             <td>
-                                {{ project.Id }}
+                                {{ project.ProjectKey }}
                             </td>
                             <td>
                                 <a ui-sref="authenticated.single_project({id: project.Id})" title="{{ project.Name }}">

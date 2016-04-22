@@ -28,8 +28,8 @@
                             <div class="form-group">
                                 <label>Title</label>
                                 <input
+                                        readonly="readonly"
                                         ng-model="issueData.Title"
-                                        required="required"
                                         type="text"
                                         class="form-control"
                                         placeholder="Title"/>
@@ -37,8 +37,8 @@
                             <div class="form-group">
                                 <label>Description</label>
                                 <input
+                                        readonly="readonly"
                                         ng-model="issueData.Description"
-                                        required="required"
                                         type="text"
                                         class="form-control"
                                         placeholder="Description"/>
@@ -46,8 +46,8 @@
                             <div class="form-group">
                                 <label>AssigneeId</label>
                                 <input
+                                        readonly="readonly"
                                         ng-model="issueData.Assignee.Username"
-                                        required="required"
                                         type="text"
                                         class="form-control"
                                         placeholder="AssigneeId"/>
@@ -57,8 +57,8 @@
                             <div class="form-group">
                                 <label>PriorityId</label>
                                 <input
+                                        readonly="readonly"
                                         ng-model="issueData.Priority.Name"
-                                        required="required"
                                         type="text"
                                         class="form-control"
                                         placeholder="PriorityId"/>
@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <label>Author</label>
                                 <input
-                                        disabled="disabled"
+                                        readonly="readonly"
                                         ng-model="issueData.Author.Username"
                                         type="text"
                                         class="form-control"
@@ -77,7 +77,7 @@
                             <div class="form-group">
                                 <label>Project</label>
                                 <input
-                                        disabled="disabled"
+                                        readonly="readonly"
                                         ng-model="issueData.Project.Name"
                                         type="text"
                                         class="form-control"
@@ -86,7 +86,7 @@
                             <div class="form-group">
                                 <label>Status</label>
                                 <input
-                                        disabled="disabled"
+                                        readonly="readonly"
                                         ng-model="issueData.Status.Name"
                                         type="text"
                                         class="form-control"

@@ -19,16 +19,29 @@ app.service('authentication', ['$q', 'httpRequests', function ($q, httpRequests)
         "_fetchAuthToken": function (email, password) {
             var deferred = $q.defer();
 
-            httpRequests.post('auth_token', {
-                    Username:   email,
-                    Password:   password,
-                    grant_type: "password"
-                })
+            httpRequests.methodFromString('auth_token', 'POST', {}, $.param({
+                Username:   email,
+                Password:   password,
+                grant_type: "password"
+            }), {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            })
                 .then(function (response) {
                     deferred.resolve(response);
                 }, function (err) {
                     deferred.reject(err);
                 });
+
+            //httpRequests.post('auth_token', {
+            //        Username:   email,
+            //        Password:   password,
+            //        grant_type: "password"
+            //    })
+            //    .then(function (response) {
+            //        deferred.resolve(response);
+            //    }, function (err) {
+            //        deferred.reject(err);
+            //    });
 
             return deferred.promise;
         },

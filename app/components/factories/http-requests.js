@@ -1,6 +1,8 @@
 app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', function ($q, $http, $log, api, cfpLoadingBar) {
     var request = {
 
+        "_headers": {},
+
         "_getCurrentUserAccessToken": function () {
             return window.sessionStorage.getItem('user_token');
         },
@@ -16,9 +18,7 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
         'performRequest': function (urlName, requestType, urlParams, postParams) {
             var deferred = $q.defer();
             var url      = this.formatUrl(api.getUrl(urlName), urlParams);
-            var headers  = {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            };
+            var headers  = this._headers;
 
             //cfpLoadingBar.start();
 
@@ -34,7 +34,7 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
                 url:     url,
                 method:  requestType,
                 headers: headers,
-                data:    (typeof postParams === "undefined" ? {} : $.param(postParams)),
+                data:    (typeof postParams === "undefined" ? {} : postParams),
                 cache:   false
             })
                 .success(function (data) {
@@ -48,6 +48,9 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
                     deferred.reject(msg);
                     $log.error(msg, code);
                 });
+
+            // clear headers
+            this._headers = {};
 
             return deferred.promise;
         },
@@ -72,7 +75,9 @@ app.factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', func
             return this.performRequest(urlName, 'put', urlParams, putParams);
         },
 
-        'methodFromString': function (urlName, method, urlParams, postParams) {
+        'methodFromString': function (urlName, method, urlParams, postParams, headers) {
+            this._headers = headers || {};
+
             switch (method) {
                 case "GET":
                     return this.get(urlName, urlParams);

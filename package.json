@@ -1,7 +1,7 @@
 {
   "name": "issue-tracking-system",
   "private": true,
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "SoftUni JS Frameworks AngularJS Exam Project",
   "repository": "https://github.com/lubomirhadziev/Issue-Tracking-System",
   "license": "MIT",
@@ -22,7 +22,6 @@
     "postinstall": "bower install",
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 -c-1",
-    "live": "live-reload --port 8001",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run",

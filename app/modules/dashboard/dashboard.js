@@ -3,6 +3,8 @@ app.controller('DashboardCtrl', ['$scope', 'httpRequests', 'errorsHandler', 'use
     // get current user data
     var currentUserData = user.getLoggedUserData();
 
+    $scope.isLoggedUserIsAdmin = currentUserData.isAdmin;
+
     // filter affiliated projects
     $scope.affiliatedProjects = _.filter(projects, function (project) {
         return (project.Lead.Id === currentUserData.Id);

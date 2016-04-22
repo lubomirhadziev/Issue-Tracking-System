@@ -40,7 +40,9 @@
                                         class="form-control"
                                         placeholder="Description"/>
                             </div>
-                            <div class="form-group">
+                            <div
+                                    ng-if="project.ProjectKey"
+                                    class="form-group">
                                 <label>ProjectKey</label>
                                 <input
                                         ng-model="project.ProjectKey"
@@ -49,25 +51,29 @@
                                         class="form-control"
                                         placeholder="ProjectKey"/>
                             </div>
-                            <div class="form-group">
+                            <div
+                                    ng-if="isLoggedUserIsAdmin"
+                                    class="form-group">
                                 <label>LeadId</label>
 
                                 <select
                                         required="required"
                                         ng-model="project.LeadId"
-                                        ng-options="user as user.Username for user in allUsers track by user.Id"
+                                        ng-options="user as user.Username for user in allUsers | orderBy: 'Username' track by user.Id"
                                         class="form-control"></select>
                             </div>
                             <div class="form-group">
                                 <label>Labels</label>
                                 <selectize
                                         config="selectConfig"
+                                        options="projectData.Labels"
                                         ng-model="project.Labels"></selectize>
                             </div>
                             <div class="form-group">
                                 <label>Priorities</label>
                                 <selectize
                                         config="selectConfig"
+                                        options="projectData.Priorities"
                                         ng-model="project.Priorities"></selectize>
                             </div>
                             <div class="form-group">

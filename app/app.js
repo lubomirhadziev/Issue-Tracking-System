@@ -10,7 +10,7 @@ var app = angular.module('issueTrackingSystem', [
 
     .constant('API_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
 
-    .config(['$stateProvider', '$urlRouterProvider', 'paginationTemplateProvider', function ($stateProvider, $urlRouterProvider, paginationTemplateProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'paginationTemplateProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, paginationTemplateProvider) {
 
         // pagination config
         paginationTemplateProvider.setPath('components/views/dirPagination.tpl.html');
@@ -25,7 +25,6 @@ var app = angular.module('issueTrackingSystem', [
                 template:   '<ui-view/>',
                 controller: "RootCtrl",
                 data:       {
-                    requireUserLoggedIn:    false,
                     requireUserNotLoggedIn: true
                 }
             })
@@ -51,8 +50,7 @@ var app = angular.module('issueTrackingSystem', [
                 template:   '<ui-view/>',
                 controller: "AuthenticatedCtrl",
                 data:       {
-                    requireUserLoggedIn:    true,
-                    requireUserNotLoggedIn: false
+                    requireUserLoggedIn: true
                 }
             })
 
@@ -76,6 +74,9 @@ var app = angular.module('issueTrackingSystem', [
                 url:         "/projects",
                 controller:  'AllProjectsCtrl',
                 templateUrl: "modules/projects/all_projects.html",
+                data:        {
+                    requireAdminLoggedIn: true
+                },
                 resolve:     {
                     projects: ['httpRequests', function (httpRequests) {
                         return httpRequests.get('projects');
@@ -87,7 +88,27 @@ var app = angular.module('issueTrackingSystem', [
                 url:         "/projects/add",
                 controller:  'AddProjectCtrl',
                 templateUrl: "modules/projects/form.html",
+                data:        {
+                    requireAdminLoggedIn: true
+                },
                 resolve:     {
+                    allUsers: ['httpRequests', function (httpRequests) {
+                        return httpRequests.get('users');
+                    }]
+                }
+            })
+
+            .state('authenticated.edit_project', {
+                url:         "/projects/:id/edit",
+                controller:  'EditProjectCtrl',
+                templateUrl: "modules/projects/form.html",
+                resolve:     {
+                    projectData: ['$stateParams', 'httpRequests', function ($stateParams, httpRequests) {
+                        return httpRequests.get('single_project', {
+                            id: $stateParams.id
+                        });
+                    }],
+
                     allUsers: ['httpRequests', function (httpRequests) {
                         return httpRequests.get('users');
                     }]
@@ -199,6 +220,15 @@ var app = angular.module('issueTrackingSystem', [
             // redirect user to dashboard page if user exists
             if (stateData.requireUserNotLoggedIn) {
                 if (user.isUserLoggedIn()) {
+                    event.preventDefault();
+                    $state.go('authenticated.dashboard');
+                    return false;
+                }
+            }
+
+            // redirect user to dashboard page if is not a admin
+            if (stateData.requireAdminLoggedIn) {
+                if (!user.getLoggedUserData().isAdmin) {
                     event.preventDefault();
                     $state.go('authenticated.dashboard');
                     return false;

@@ -5,16 +5,16 @@
                 {{ projectData.Name }}
 
                 <button
-                        ng-if="isCurrentUserLead"
+                        ng-if="isCurrentUserLead || isLoggedUserIsAdmin"
                         class="pull-right btn btn-success btn-sm"
                         ui-sref="authenticated.single_project_add_issue({id: projectData.Id})">
                     Add Issue
                 </button>
 
                 <button
-                        ng-if="isCurrentUserLead"
+                        ng-if="isCurrentUserLead || isLoggedUserIsAdmin"
                         class="pull-right margin-right-10 btn btn-success btn-sm"
-                        ui-sref="authenticated.single_project.add_issue({id: projectData.Id})">
+                        ui-sref="authenticated.edit_project({id: projectData.Id})">
                     Edit
                 </button>
             </h1>
@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label>Project key</label>
                                 <input
-                                        disabled
+                                        readonly="readonly"
                                         ng-model="projectData.ProjectKey"
                                         type="text"
                                         class="form-control"
@@ -44,8 +44,8 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input
+                                        readonly="readonly"
                                         ng-model="projectData.Name"
-                                        required="required"
                                         type="text"
                                         class="form-control"
                                         placeholder="Name"/>
@@ -53,8 +53,8 @@
                             <div class="form-group">
                                 <label>Description</label>
                                 <input
+                                        readonly="readonly"
                                         ng-model="projectData.Description"
-                                        required="required"
                                         type="text"
                                         class="form-control"
                                         placeholder="Description"/>
@@ -62,8 +62,8 @@
                             <div class="form-group">
                                 <label>LeadId</label>
                                 <input
+                                        readonly="readonly"
                                         ng-model="projectData.Lead.Username"
-                                        required="required"
                                         type="text"
                                         class="form-control"
                                         placeholder="LeadId"/>

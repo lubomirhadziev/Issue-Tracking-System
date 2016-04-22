@@ -1,7 +1,23 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Dashboard</h1>
+            <h1 class="page-header">
+                Dashboard
+
+                <button
+                        ng-if="isLoggedUserIsAdmin"
+                        class="pull-right margin-right-10 btn btn-info btn-sm"
+                        ui-sref="authenticated.all_projects">
+                    All Projects
+                </button>
+
+                <button
+                        ng-if="isLoggedUserIsAdmin"
+                        class="pull-right margin-right-10 btn btn-success btn-sm"
+                        ui-sref="authenticated.add_project">
+                    New Project
+                </button>
+            </h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
