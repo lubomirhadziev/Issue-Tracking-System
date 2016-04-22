@@ -96,6 +96,20 @@
                 <div class="panel-heading">
                     <i class="fa fa-list-alt fa-fw"></i>
                     Issues
+
+                    <div class="pull-right">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input
+                                            checked="checked"
+                                            ng-click="showOnlyAssignedIssues()"
+                                            type="checkbox">
+                                    Show only assigned issues
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped">
@@ -115,9 +129,40 @@
                             </td>
                         </tr>
 
+                        <tr ng-if="projectIssues.length > 0">
+                            <td>
+                                <input
+                                        class="form-control"
+                                        ng-model="projectIssuesFilter.Title"
+                                        type="text"
+                                        placeholder="Filter by title" />
+                            </td>
+                            <td>
+                                <input
+                                        class="form-control"
+                                        ng-model="projectIssuesFilter.Description"
+                                        type="text"
+                                        placeholder="Filter by description" />
+                            </td>
+                            <td>
+                                <input
+                                        class="form-control"
+                                        ng-model="projectIssuesFilter.DueDate"
+                                        type="text"
+                                        placeholder="Filter by due date" />
+                            </td>
+                            <td>
+                                <input
+                                        class="form-control"
+                                        ng-model="projectIssuesFilter.Assignee.Username"
+                                        type="text"
+                                        placeholder="Filter by assignee" />
+                            </td>
+                        </tr>
+
                         <tr
                                 ng-if="projectIssues"
-                                dir-paginate="issue in projectIssues | itemsPerPage: 10 | orderBy: 'Id' : true">
+                                dir-paginate="issue in projectIssues| filter: projectIssuesFilter | orderBy: 'Id' : true | itemsPerPage: 10">
                             <td>
                                 <a ui-sref="authenticated.single_issue({id: issue.Id})"
                                    title="{{ issue.Title }}">
@@ -125,7 +170,7 @@
                                 </a>
                             </td>
                             <td>{{ issue.Description }}</td>
-                            <td>{{ issue.DueDate }}</td>
+                            <td>{{ issue.DueDate | date: 'dd.MM.yyyy' }}</td>
                             <td>{{ issue.Assignee.Username }}</td>
                         </tr>
 

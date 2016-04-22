@@ -78,6 +78,19 @@ angular.module('issueTrackingSystem.projectsModule', [])
         $scope.projectData         = projectData;
         $scope.projectIssues       = projectIssues;
 
+        $scope.projectIssuesFilter = {
+            Assignee: {
+                Id: user.getLoggedUserData().Id
+            }
+        };
+
+        $scope.showOnlyAssignedIssues = function () {
+            if ($scope.projectIssuesFilter.Assignee.Id === 0) {
+                $scope.projectIssuesFilter.Assignee.Id = user.getLoggedUserData().Id;
+            } else {
+                $scope.projectIssuesFilter.Assignee.Id = 0;
+            }
+        };
     }])
 
     .controller('AddProjectCtrl', ['$scope', '$state', 'httpRequests', 'errorsHandler', 'user', 'allUsers', function ($scope, $state, httpRequests, errorsHandler, user, allUsers) {

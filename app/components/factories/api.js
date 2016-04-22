@@ -14,7 +14,8 @@ angular.module('issueTrackingSystem.factories.api', [])
             "issues_me_filter":           API_URL + 'Issues/me?pageSize={pageSize}&pageNumber={pageNumber}&orderBy={orderBy}',
             "single_issue":               API_URL + 'Issues/{id}',
             "single_issue_comments":      API_URL + 'Issues/{id}/comments',
-            "single_issue_change_status": API_URL + 'Issues/{id}/changestatus?statusid={statusId}'
+            "single_issue_change_status": API_URL + 'Issues/{id}/changestatus?statusid={statusId}',
+            "profile_change_password":    API_URL + 'api/Account/ChangePassword'
         };
 
         var api = {

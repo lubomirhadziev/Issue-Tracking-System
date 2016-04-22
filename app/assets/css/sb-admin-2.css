@@ -401,3 +401,7 @@ a[ui-sref], a.dropdown-toggle {
     padding-top: 15px;
     padding-bottom: 10px;
 }
+
+.checkbox, .radio {
+    margin-top: 0 !important;
+}

@@ -1,6 +1,6 @@
 angular.module('issueTrackingSystem.factories.httpRequests', [])
 
-    .factory('httpRequests', ['$q', '$http', '$log', 'api', 'cfpLoadingBar', function ($q, $http, $log, api, cfpLoadingBar) {
+    .factory('httpRequests', ['$q', '$http', '$log', 'api', function ($q, $http, $log, api) {
     var request = {
 
         "_headers": {},
@@ -22,8 +22,6 @@ angular.module('issueTrackingSystem.factories.httpRequests', [])
             var url      = this.formatUrl(api.getUrl(urlName), urlParams);
             var headers  = this._headers;
 
-            //cfpLoadingBar.start();
-
             // append user authorization access token if user is logged in
             var currentUserAccessToken = this._getCurrentUserAccessToken();
 
@@ -40,13 +38,9 @@ angular.module('issueTrackingSystem.factories.httpRequests', [])
                 cache:   false
             })
                 .success(function (data) {
-                    //cfpLoadingBar.complete();
-
                     deferred.resolve(data);
                 })
                 .error(function (msg, code) {
-                    //cfpLoadingBar.complete();
-
                     deferred.reject(msg);
                     $log.error(msg, code);
                 });

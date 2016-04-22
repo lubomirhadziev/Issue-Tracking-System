@@ -1,4 +1,4 @@
-var app = angular.module('issueTrackingSystem', [
+angular.module('issueTrackingSystem', [
         'ngRoute',
         'ui.router',
         'oitozero.ngSweetAlert',
@@ -12,6 +12,7 @@ var app = angular.module('issueTrackingSystem', [
         'issueTrackingSystem.dashboardModule',
         'issueTrackingSystem.authenticatedModule',
         'issueTrackingSystem.authModule',
+        'issueTrackingSystem.profileModule',
         'issueTrackingSystem.directives.sideMenu',
         'issueTrackingSystem.factories.api',
         'issueTrackingSystem.factories.errorsHandler',
