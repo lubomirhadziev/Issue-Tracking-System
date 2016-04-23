@@ -50,26 +50,30 @@ angular.module('issueTrackingSystem.authModule', [])
         $scope.isSubmitBtnDisabled = false;
 
         $scope.doRegister = function () {
-            $scope.isSubmitBtnDisabled = true;
 
-            // make request to sign up user
-            httpRequests.post('auth_register', $scope.userData)
-                .then(function (response) {
+            if ($scope.passwordData.Password === null || $scope.passwordData.Password != $scope.passwordData.ConfirmPassword) {
+                SweetAlert.error('Password and confirm password does not match!');
+            } else {
+                $scope.isSubmitBtnDisabled = true;
 
-                    // auto sign in user
-                    authentication.signInUser($scope.userData.Email, $scope.userData.Password)
-                        .then(function (response) {
-                            $state.go('authenticated.dashboard');
-                        }, function (err) {
-                            $scope.isSubmitBtnDisabled = false;
-                            errorsHandler.handle(err);
-                        });
+                // make request to sign up user
+                httpRequests.post('auth_register', $scope.userData)
+                    .then(function (response) {
 
-                }, function (err) {
-                    $scope.isSubmitBtnDisabled = false;
-                    errorsHandler.handle(err);
-                });
+                        // auto sign in user
+                        authentication.signInUser($scope.userData.Email, $scope.userData.Password)
+                            .then(function (response) {
+                                $state.go('authenticated.dashboard');
+                            }, function (err) {
+                                $scope.isSubmitBtnDisabled = false;
+                                errorsHandler.handle(err);
+                            });
 
+                    }, function (err) {
+                        $scope.isSubmitBtnDisabled = false;
+                        errorsHandler.handle(err);
+                    });
+            }
         };
     }])
 

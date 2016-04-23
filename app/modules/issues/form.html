@@ -64,16 +64,11 @@
                                 <label>AssigneeId</label>
 
                                 <select
-                                        ng-model="issue.AssigneeId"
                                         required="required"
-                                        class="form-control">
-                                    <option
-                                            ng-repeat="user in allUsers | orderBy: 'Id' : true"
-                                            value="{{ user.Id }}"
-                                    >
-                                        {{ user.Username }}
-                                    </option>
-                                </select>
+                                        ng-model="issue.AssigneeId"
+                                        ng-options="user as user.Username for user in allUsers | orderBy: 'Username' track by user.Id"
+                                        class="form-control"></select>
+
                             </div>
                             <div class="form-group">
                                 <label>PriorityId</label>

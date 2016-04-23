@@ -200,19 +200,17 @@ angular.module('issueTrackingSystem.issuesModule', [])
         $scope.projectData = projectData;
         $scope.priorities  = projectData.Priorities;
 
-
         $scope.issue = {
             Title:       issueData.Title,
             Description: issueData.Description,
             DueDate:     new Date(issueData.DueDate),
             ProjectId:   issueData.Project.Id.toString(),
-            AssigneeId:  issueData.Assignee.Id.toString(),
+            AssigneeId:  {
+                Id: issueData.Assignee.Id
+            },
             PriorityId:  issueData.Priority.Id.toString(),
             Labels:      _.pluck(issueData.Labels, 'Name')
         };
-
-        console.log($scope.issue);
-
 
         $scope.labelsSelectConfig = {
             create:      true,
@@ -226,7 +224,17 @@ angular.module('issueTrackingSystem.issuesModule', [])
         $scope.doIssue = function () {
             $scope.isSubmitBtnDisabled = true;
 
-            issueService.saveIssue($scope.issue, 'single_issue', 'PUT', {
+            var updatedIssueData = {
+                Title:       $scope.issue.Title,
+                Description: $scope.issue.Description,
+                DueDate:     $scope.issue.DueDate,
+                ProjectId:   $scope.issue.ProjectId,
+                AssigneeId:  $scope.issue.AssigneeId.Id,
+                PriorityId:  $scope.issue.PriorityId,
+                Labels:      $scope.issue.Labels
+            };
+
+            issueService.saveIssue(updatedIssueData, 'single_issue', 'PUT', {
                     id: issueData.Id
                 })
                 .then(function (response) {

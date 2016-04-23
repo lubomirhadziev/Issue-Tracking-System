@@ -20,7 +20,7 @@ angular.module('issueTrackingSystem.profileModule', [])
         };
 
         $scope.changePassword = function () {
-            if ($scope.passwordData.NewPassword != $scope.passwordData.ConfirmPassword) {
+            if ($scope.passwordData.NewPassword === null || $scope.passwordData.NewPassword != $scope.passwordData.ConfirmPassword) {
                 SweetAlert.error('New password and confirm password does not match!');
             } else {
 
