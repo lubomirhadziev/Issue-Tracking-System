@@ -166,7 +166,15 @@ angular.module('issueTrackingSystem.issuesModule', [])
         $scope.doIssue = function () {
             $scope.isSubmitBtnDisabled = true;
 
-            issueService.saveIssue($scope.issue, 'issues', 'POST')
+            issueService.saveIssue({
+                    Title:       $scope.issue.Title,
+                    Description: $scope.issue.Description,
+                    DueDate:     $scope.issue.DueDate,
+                    ProjectId:   $scope.projectId,
+                    AssigneeId:  $scope.issue.AssigneeId.Id,
+                    PriorityId:  $scope.issue.PriorityId,
+                    Labels:      $scope.issue.Labels
+                }, 'issues', 'POST')
                 .then(function (response) {
                     $state.go('authenticated.single_project', {
                         id: $scope.projectId
