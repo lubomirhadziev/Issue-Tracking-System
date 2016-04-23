@@ -162,7 +162,7 @@
 
                         <tr
                                 ng-if="projectIssues"
-                                dir-paginate="issue in projectIssues| filter: projectIssuesFilter | orderBy: 'Id' : true | itemsPerPage: 10">
+                                dir-paginate="issue in projectIssues | filter: projectIssuesFilter | orderBy: 'Id' : true | itemsPerPage: 10">
                             <td>
                                 <a ui-sref="authenticated.single_issue({id: issue.Id})"
                                    title="{{ issue.Title }}">

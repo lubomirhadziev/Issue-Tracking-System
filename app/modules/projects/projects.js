@@ -67,10 +67,12 @@ angular.module('issueTrackingSystem.projectsModule', [])
             });
     }])
 
+
     .controller('AllProjectsCtrl', ['$scope', 'projects', function ($scope, projects) {
         $scope.allProjects = _.chain(projects).sortBy('Id').reverse().value();
 
     }])
+
 
     .controller('SingleProjectCtrl', ['$scope', 'user', 'projectData', 'projectIssues', function ($scope, user, projectData, projectIssues) {
         $scope.isCurrentUserLead   = (user.getLoggedUserData().Id === projectData.Lead.Id);

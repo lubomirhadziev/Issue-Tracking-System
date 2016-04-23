@@ -41,7 +41,7 @@ angular.module('issueTrackingSystem.authModule', [])
         };
     }])
 
-    .controller('AuthRegisterCtrl', ['$scope', '$state', 'httpRequests', 'authentication', 'errorsHandler', function ($scope, $state, httpRequests, authentication, errorsHandler) {
+    .controller('AuthRegisterCtrl', ['$scope', '$state', 'httpRequests', 'authentication', 'errorsHandler', 'SweetAlert', function ($scope, $state, httpRequests, authentication, errorsHandler, SweetAlert) {
         $scope.userData            = {
             Email:           null,
             Password:        null,
@@ -50,9 +50,10 @@ angular.module('issueTrackingSystem.authModule', [])
         $scope.isSubmitBtnDisabled = false;
 
         $scope.doRegister = function () {
-
-            if ($scope.passwordData.Password === null || $scope.passwordData.Password != $scope.passwordData.ConfirmPassword) {
+            if ($scope.userData.Password === null || $scope.userData.Password != $scope.userData.ConfirmPassword) {
                 SweetAlert.error('Password and confirm password does not match!');
+            } else if ($scope.userData.Password.length < 6) {
+                SweetAlert.error('Password must be at least 6 characters!');
             } else {
                 $scope.isSubmitBtnDisabled = true;
 

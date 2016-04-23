@@ -22,6 +22,8 @@ angular.module('issueTrackingSystem.profileModule', [])
         $scope.changePassword = function () {
             if ($scope.passwordData.NewPassword === null || $scope.passwordData.NewPassword != $scope.passwordData.ConfirmPassword) {
                 SweetAlert.error('New password and confirm password does not match!');
+            } else if ($scope.passwordData.NewPassword.length < 6 || $scope.passwordData.OldPassword.length < 6) {
+                SweetAlert.error('Passwords must be at least 6 characters!');
             } else {
 
                 httpRequests.post('profile_change_password', $scope.passwordData)
